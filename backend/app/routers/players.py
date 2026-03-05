@@ -56,3 +56,29 @@ def get_players(
     conn.close()
 
     return [dict(zip(columns, row)) for row in rows]
+
+
+@router.get("/players/{uid}")
+def get_player(uid: int):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT p.*, s.name as season_name 
+        FROM players p
+        JOIN seasons s ON p.season_id = s.id
+        WHERE p.uid = %s
+        ORDER BY s.name DESC
+    """, (uid,))
+    
+    rows = cursor.fetchall()
+    columns = [desc[0] for desc in cursor.description]
+
+    cursor.close()
+    conn.close()
+
+    if not rows:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=404, detail="Player not found")
+
+    return [dict(zip(columns, row)) for row in rows]
