@@ -18,7 +18,7 @@ def get_players(
     conn = get_connection()
     cursor = conn.cursor()
 
-    query = "SELECT id, name, position, age, club, division, nationality, minutes, goals, assists, xg, xg_90, xa, xa_90, pass_pct, pr_passes, sprints_90, int_90, av_rat FROM players WHERE 1=1"
+    query = "SELECT id, uid, name, position, age, club, division, nationality, minutes, goals, assists, xg, xg_90, xa, xa_90, pass_pct, pr_passes, sprints_90, int_90, av_rat FROM players WHERE 1=1"
     params = []
 
     if season_id:

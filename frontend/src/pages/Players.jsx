@@ -70,7 +70,9 @@ export default function Players() {
           </tr>
         </thead>
         <tbody>
-          {players.map(player => (
+          {players.map(player => {
+            console.log(Object.keys(player), player.uid, player.name)
+            return (
             <tr
               key={player.id}
               onClick={() => navigate(`/players/${player.uid}`)}
@@ -89,7 +91,8 @@ export default function Players() {
               <td>{player.pass_pct}%</td>
               <td>{player.av_rat}</td>
             </tr>
-          ))}
+            )
+          })}
         </tbody>
       </table>
     </div>
