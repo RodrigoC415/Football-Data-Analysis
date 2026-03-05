@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.routers import seasons
+from app.routers import seasons, players
 
 app = FastAPI(
     title="Football Data Analysis API",
@@ -7,6 +7,7 @@ app = FastAPI(
 )
 
 app.include_router(seasons.router)
+app.include_router(players.router)
 
 @app.get("/")
 def root():
