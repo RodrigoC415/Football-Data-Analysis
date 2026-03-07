@@ -18,7 +18,15 @@ def get_players(
     conn = get_connection()
     cursor = conn.cursor()
 
-    query = "SELECT id, uid, name, position, age, club, division, nationality, minutes, goals, assists, xg, xg_90, xa, xa_90, pass_pct, pr_passes, sprints_90, int_90, av_rat FROM players WHERE 1=1"
+    query = """
+    SELECT id, uid, name, position, age, club, division, nationality, minutes, goals, assists,
+           xg, xg_90, xa, xa_90, pass_pct, pr_passes, sprints_90, int_90, av_rat, tck_w, tck_90,
+           gls_90, poss_won_90, pres_a_90, drb_90, hdr_pct, shot_pct,
+           CASE WHEN minutes > 0 THEN ROUND(shots::numeric / NULLIF(minutes::numeric, 0) * 90, 2) ELSE 0 END as shots_90,
+           CASE WHEN minutes > 0 THEN ROUND(hdrs::numeric / NULLIF(minutes::numeric, 0) * 90, 2) ELSE 0 END as hdrs_90,
+           CASE WHEN minutes > 0 THEN ROUND(pr_passes::numeric / NULLIF(minutes::numeric, 0) * 90, 2) ELSE 0 END as pr_passes_90
+    FROM players WHERE 1=1
+    """
     params = []
 
     if season_id:
@@ -63,12 +71,16 @@ def get_player(uid: int):
     conn = get_connection()
     cursor = conn.cursor()
 
+    
     cursor.execute("""
-        SELECT p.*, s.name as season_name 
-        FROM players p
-        JOIN seasons s ON p.season_id = s.id
-        WHERE p.uid = %s
-        ORDER BY s.name DESC
+    SELECT p.*, s.name as season_name,
+           CASE WHEN p.minutes > 0 THEN ROUND(p.shots::numeric / NULLIF(p.minutes::numeric, 0) * 90, 2) ELSE 0 END as shots_90,
+           CASE WHEN p.minutes > 0 THEN ROUND(p.hdrs::numeric / NULLIF(p.minutes::numeric, 0) * 90, 2) ELSE 0 END as hdrs_90,
+           CASE WHEN p.minutes > 0 THEN ROUND(p.pr_passes::numeric / NULLIF(p.minutes::numeric, 0) * 90, 2) ELSE 0 END as pr_passes_90
+    FROM players p
+    JOIN seasons s ON p.season_id = s.id
+    WHERE p.uid = %s
+    ORDER BY s.name DESC
     """, (uid,))
     
     rows = cursor.fetchall()
