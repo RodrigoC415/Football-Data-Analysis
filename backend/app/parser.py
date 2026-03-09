@@ -76,9 +76,11 @@ COLUMN_MAP = {
     "Shutouts": "shutouts",
     "Conc": "conc",
     "All/90": "all_90",
+    "xGP/90": "xgp_90",
     "Pres A": "pres_a",
     "Pres A/90": "pres_a_90",
     "Poss Won/90": "poss_won_90",
+    "Poss Lost/90": "poss_lost_90",
     "Drb": "drb",
     "Drb/90": "drb_90",
     "Blk": "blk",
@@ -140,10 +142,10 @@ def insert_players(players: list, season: str):
                 club, division, nationality, personality, preferred_foot, salary, transfer_value,
                 minutes, apps, goals, assists, xg, xg_90, xa, xa_90, xg_op, pass_pct, pass_cmp_90,
                 pr_passes, sprints_90, int_90, itc, tck_90, tck_w, shots, sht, shot_pct, gls_90,
-                shutouts, conc, all_90, pres_a, pres_a_90, poss_won_90, drb, drb_90, blk, hdrs,
-                hdr_pct, distance, av_rat)
+                shutouts, conc, all_90, pres_a, pres_a_90, poss_won_90,poss_lost_90, drb, drb_90, blk, hdrs,
+                hdr_pct, distance, av_rat, xgp_90)
             VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,
-                    %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
+                    %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
         """, (season_id, player.get("uid"), player.get("name"), player.get("position"),
               player.get("age"), player.get("height_cm"), player.get("weight_kg"),
               player.get("club"), player.get("division"), player.get("nationality"),
@@ -156,8 +158,8 @@ def insert_players(players: list, season: str):
               player.get("shots"), player.get("sht"), player.get("shot_pct"), player.get("gls_90"),
               player.get("shutouts"), player.get("conc"), player.get("all_90"),
               player.get("pres_a"), player.get("pres_a_90"), player.get("poss_won_90"),
-              player.get("drb"), player.get("drb_90"), player.get("blk"), player.get("hdrs"),
-              player.get("hdr_pct"), player.get("distance"), player.get("av_rat")))
+              player.get("poss_lost_90"), player.get("drb"), player.get("drb_90"), player.get("blk"), player.get("hdrs"),
+              player.get("hdr_pct"), player.get("distance"), player.get("av_rat"),player.get("xgp_90")))
 
     conn.commit()
     cursor.close()

@@ -10,17 +10,18 @@ const FIELD_STATS = [
   { key: 'pres_a_90', label: 'Pressures Att', max: 40 },
   { key: 'tck_90', label: 'Tackles Won', max: 5, extra: 'tck_w', extraSuffix: '%' },
   { key: 'poss_won_90', label: 'Possession Won', max: 20 },
+  { key: 'poss_lost_90', label: 'Poss Lost', max: 15 },
   { key: 'pass_cmp_90', label: 'Passes Completed', max: 80, extra: 'pass_pct', extraSuffix: '%' },
   { key: 'pr_passes_90', label: 'Progressive Passes', max: 10 },
 ]
 
 const GK_STATS = [
-  { key: 'all_90', label: 'Saves', max: 5 },
-  { key: 'shutouts', label: 'Shutouts', max: 20 },
+  { key: 'xgp_90', label: 'xG Prevented', max: 1 },
+  { key: 'all_90', label: 'Goals Allowed/90', max: 2 },
   { key: 'poss_won_90', label: 'Possession Won', max: 10 },
-  { key: 'pass_pct', label: 'Passes Completed', max: 100 },
-  { key: 'pr_passes', label: 'Progressive Passes', max: 50 },
-  { key: 'conc', label: 'Goals Allowed', max: 50 },
+  { key: 'poss_lost_90', label: 'Poss Lost', max: 5 },
+  { key: 'pass_cmp_90', label: 'Passes/90', max: 50, extra: 'pass_pct', extraSuffix: '%' },
+  { key: 'pr_passes_90', label: 'Prog Passes', max: 5 },
 ]
 
 function isGK(position) {
